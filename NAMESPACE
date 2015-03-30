@@ -1,0 +1,14 @@
+useDynLib(dtwKnn)
+#useDynlib(lower_upper_env_C)
+#useDynlib(run_znorm_C)
+#useDynlib(ucr_dtw_c)
+#useDynlib(lbKeogh_C)
+
+export(
+  ucrDTW,
+  lbKeogh,
+  envelope,
+  runZnorm,
+  runMeanSD
+)
+
