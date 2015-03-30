@@ -281,7 +281,7 @@ SEXP ucr_dtw_knn_C( SEXP query, SEXP reference, SEXP window, SEXP sizeK
   double *u, *l, *qo, *uo, *lo,*tz,*cb, *cb1, *cb2,*u_d, *l_d;
 
 
-  double d;
+  double d, m_d;
   R_len_t i , j, ii,k,P=0;
   double ex , ex2 , mean, std;
   int m=-1, r=-1;
@@ -293,6 +293,7 @@ SEXP ucr_dtw_knn_C( SEXP query, SEXP reference, SEXP window, SEXP sizeK
 
   /* read size of the query */
   m       = LENGTH(query);
+  m_d     = (double)m;
   lenR    = LENGTH(reference);
 
   if(m<4) error("query length must be > 3");
@@ -355,10 +356,10 @@ SEXP ucr_dtw_knn_C( SEXP query, SEXP reference, SEXP window, SEXP sizeK
   /* read warping windows */
   double R = asReal(window);
   if (R<=1)
-    r = floor(R*m);
+    r = floor(R*m_d);
   else
     r = floor(R);
-  if(r>m) r = (double)m;
+  if(r>m_d) r = m_d;
 
   /// malloc everything here
   qo      = (double*) R_alloc(m,sizeof(double));
@@ -394,8 +395,8 @@ SEXP ucr_dtw_knn_C( SEXP query, SEXP reference, SEXP window, SEXP sizeK
   }
 
   /// Do z-normalize the query, keep in same array, q
-  mean = ex/m;
-  std = ex2/m;
+  mean = ex/m_d;
+  std = ex2/m_d;
   std = sqrt(std-mean*mean);
   for( i = 0 ; i < m ; i++ )
     q[i] = (q[i] - mean)/std;
@@ -485,8 +486,8 @@ SEXP ucr_dtw_knn_C( SEXP query, SEXP reference, SEXP window, SEXP sizeK
     /* Start the task when there are more than m-1 points in the current chunk*/
     if( i >= m-1 )
     {
-      mean = ex/m;
-      std  = ex2/m;
+      mean = ex/m_d;
+      std  = ex2/m_d;
       std  = sqrt(std-mean*mean);
 
       /* compute the start location of the data in the current circular array, t*/
