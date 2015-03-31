@@ -152,8 +152,12 @@ void lower_upper_lemire(double *t, int len, int r, double *l, double *u)
 
 SEXP lower_upper_env_C(SEXP x, SEXP win){
   SEXP l, u;
-  int len = LENGTH(x), P=0;
   int Win = asInteger(win);
+  int i, P=0;
+  R_len_t nr  = nrows(x);
+  R_len_t nc  = ncols(x);
+  R_len_t len = nr*nc; 
+
   double * _x;
   if(!isReal(x))  { 
    x =  PROTECT( coerceVector(x,REALSXP)); P++;
@@ -166,15 +170,24 @@ SEXP lower_upper_env_C(SEXP x, SEXP win){
   double  *_l   = REAL(l);
   double  *_u   = REAL(u);
 
-  lower_upper_lemire(_x, len, Win, _l, _u);
+  if(nc==1){ 
+    lower_upper_lemire(_x, len, Win, _l, _u);
+  } else {
+    for(int i = 0; i<nc; i++)
+      lower_upper_lemire(_x+nr*i, nr, Win, _l+nr*i, _u+nr*i);
+    DUPLICATE_ATTRIB(l,x);
+    DUPLICATE_ATTRIB(u,x);
+  }
   
+
   SEXP ans, names;
-  PROTECT(names = allocVector(STRSXP,2));       P++;
+  names = PROTECT(allocVector(STRSXP,2));       P++;
   SET_STRING_ELT(names,0,mkChar("upper")); 
   SET_STRING_ELT(names,1,mkChar("lower"));
-  PROTECT(ans = allocVector(VECSXP, 2));        P++;
+  ans = PROTECT(allocVector(VECSXP, 2));        P++;
   SET_VECTOR_ELT(ans, 0, u); 
   SET_VECTOR_ELT(ans, 1, l);
+  setAttrib(ans, R_NamesSymbol, names);
   UNPROTECT(P);
   return(ans);
 }

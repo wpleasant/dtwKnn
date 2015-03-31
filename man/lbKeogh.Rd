@@ -55,8 +55,8 @@ get the true distance simply take sqrt(lbKeogh(x,y,returnSum=TRUE)) or for the
 multivariate version sqrt(sum(lbKeogh(x,y,returnSum=TRUE))).
 
 envelope calculates the upper and lower bounds used in the lbKeogh. The
-implementation idea is introduced by Danial Lemire in 2009. It returns a
-list containing the upper and lower envelope.
+implementation idea was introduced by Danial Lemire in 2009. It returns a
+list containing the upper and lower envelopes for each column in x.
 
 For detailed information see:
 
