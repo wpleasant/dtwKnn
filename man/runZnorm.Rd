@@ -5,9 +5,9 @@
 \alias{runZnorm}
 \title{runZnorm runMeanSD}
 \usage{
-runZnorm(x, win, epoch = 100000L, backfill = FALSE)
+runZnorm(x, win, epoch = 100000L, backfill = FALSE, dropAttr = FALSE)
 
-runMeanSD(x, win, epoch = 100000L, backfill = FALSE)
+runMeanSD(x, win, epoch = 100000L, backfill = FALSE, dropAttr = FALSE)
 }
 \arguments{
 \item{x}{The orginal data to be transformed 1 or 2 dim non list or data
@@ -21,6 +21,8 @@ process so we don't have numerical instability.}
 \item{backfill}{Setting backfill=TRUE simply takes first normalized
 value and back-propogates it from
 win:1 otherwise 1:win will contain NAs.}
+
+\item{dropAttr}{Drop attributes? defaults is FALSE.}
 }
 \value{
 A Z-normalization vector or matrix-like object. Attributes are duplicated so it
