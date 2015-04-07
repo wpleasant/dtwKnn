@@ -17,7 +17,7 @@
 #' @param backfill Setting backfill=TRUE simply takes first normalized 
 #' value and back-propogates it from
 #' win:1 otherwise 1:win will contain NAs.
-#' @param dropAttr Drop attributes? defaults is FALSE.
+#' @param dropAttr Drop attributes? default is FALSE.
 #'
 #' @return 
 #' A Z-normalization vector or matrix-like object. Attributes are duplicated so it 
@@ -57,7 +57,7 @@
 
 runZnorm <- function(x,win,epoch=100000L, backfill=FALSE,dropAttr=FALSE){
   if(is.list(x)) stop("x can not be a list or data.frame\n")
-  .Call("run_znorm_C",x,win,epoch,backfill,dropAttr)
+  .Call(run_znorm_C,x,win,epoch,backfill,dropAttr)
 }
 
 #' @rdname runZnorm
@@ -66,5 +66,5 @@ runZnorm <- function(x,win,epoch=100000L, backfill=FALSE,dropAttr=FALSE){
 
 runMeanSD <- function(x,win,epoch=100000L,backfill=FALSE,dropAttr=FALSE){
   if(is.list(x)) stop("x can not be a list or data.frame\n")
-  .Call("run_MeanSD_C",x,win,epoch,backfill,dropAttr)
+  .Call(run_mean_sd_C,x,win,epoch,backfill,dropAttr)
 }

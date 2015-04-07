@@ -1,9 +1,11 @@
-useDynLib(dtwKnn)
-#useDynlib(lower_upper_env_C)
-#useDynlib(run_znorm_C)
-#useDynlib(ucr_dtw_c)
-#useDynlib(lbKeogh_C)
-
+#useDynLib(dtwKnn, .registration = TRUE, .fixes = "C_")
+useDynLib(dtwKnn,
+  lb_keogh_C,
+  run_znorm_C,
+  run_mean_sd_C,
+  ucr_dtw_knn_C,
+  lower_upper_env_C
+  )
 export(
   ucrDTW,
   lbKeogh,

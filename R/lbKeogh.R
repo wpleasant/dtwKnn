@@ -84,7 +84,7 @@
 
 
 lbKeogh <- function(x,y,win=20,returnSum=FALSE,cSum=FALSE,dropAttr=TRUE){
-  .Call("lbKeogh_C",x,y,as.integer(win),returnSum,cSum,dropAttr)
+  .Call(lb_keogh_C,x,y,as.integer(win),returnSum,cSum,dropAttr)
 }
 
 #'
@@ -93,7 +93,7 @@ lbKeogh <- function(x,y,win=20,returnSum=FALSE,cSum=FALSE,dropAttr=TRUE){
 
 envelope <- function(x,win){
   if(missing(win)) stop("missing win\n")
-  .Call("lower_upper_env_C",x,win)
+  .Call(lower_upper_env_C,x,win)
 }
 
 

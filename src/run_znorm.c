@@ -97,7 +97,7 @@ SEXP run_znorm_C(SEXP x, SEXP win, SEXP epoch, SEXP backfill, SEXP dropAttr)
 }
 
 
-SEXP run_MeanSD_C(SEXP x, SEXP win, SEXP epoch, SEXP backfill, SEXP dropAttr){
+SEXP run_mean_sd_C(SEXP x, SEXP win, SEXP epoch, SEXP backfill, SEXP dropAttr){
   SEXP mu, se;
   R_len_t  ii=0, i=0, j=0, ep=0, sp=0, ed=0;
   int P=0;

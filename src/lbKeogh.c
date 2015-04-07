@@ -53,7 +53,7 @@ static double lb_keogh_no_sort_cum(double *t, double *uo, double *lo,
 }
 
 
-SEXP lbKeogh_C(SEXP x, SEXP y, SEXP win, SEXP returnsum, SEXP csum, SEXP dropAttr){
+SEXP lb_keogh_C(SEXP x, SEXP y, SEXP win, SEXP returnsum, SEXP csum, SEXP dropAttr){
   SEXP  ans;
   if(isNewList(x) || isNewList(y)) error("x and y can't be lists or data.frames");
   int P      = 0;

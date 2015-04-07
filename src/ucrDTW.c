@@ -173,7 +173,7 @@ static double lb_keogh_data_cumulative(int* order, double *tz, double *qo, doubl
 /// cb : cummulative bound used for early abandoning
 /// r  : size of Sakoe-Chiba warpping band
 
-static double dtw(double* A, double* B, double *cb, int m, int r, double bsf)
+static double ucr_dtw(double* A, double* B, double *cb, int m, int r, double bsf)
 {
 
   double *cost;
@@ -545,7 +545,7 @@ SEXP ucr_dtw_knn_C( SEXP query, SEXP reference, SEXP window, SEXP sizeK
                 cb[k] = cb[k+1]+cb2[k];
             }
             /* Compute DTW and early abandoning if possible */
-            dist = dtw(tz, q, cb, m, r, bsf);
+            dist = ucr_dtw(tz, q, cb, m, r, bsf);
  checkDist: 
             if( dist < bsf )
             { 

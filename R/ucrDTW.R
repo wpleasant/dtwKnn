@@ -103,7 +103,7 @@ ucrDTW <- function(query,reference, win=length(query), K=1L, epoch=100000L,
     if(anyNA(reference)) stop("NAs in reference \n")
   }
   if(is.null(jumpSize)) jumpSize <- if(K>1L){ length(query) } else { 1L }
-  .Call("ucr_dtw_knn_C",query,reference, as.double(win)
+  .Call(ucr_dtw_knn_C,query,reference, as.double(win)
         ,K,epoch ,sortNN, jumpSize, depth,verbose)
 }
 
