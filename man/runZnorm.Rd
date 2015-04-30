@@ -22,7 +22,7 @@ process so we don't have numerical instability.}
 value and back-propogates it from
 win:1 otherwise 1:win will contain NAs.}
 
-\item{dropAttr}{Drop attributes? defaults is FALSE.}
+\item{dropAttr}{Drop attributes? default is FALSE.}
 }
 \value{
 A Z-normalization vector or matrix-like object. Attributes are duplicated so it
@@ -30,7 +30,7 @@ should be xts-friendly.
 }
 \description{
 \code{runZnorm} Compute a running Z-normalization on a numeric vector or on
-each column of a matrix-like object.
+each column of a matrix-like object. Note this is not a true Z-normalization but a rolling window.
 }
 \details{
 runMeanSD ruturns a list of the running mean and standard deviation

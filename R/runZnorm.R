@@ -1,7 +1,7 @@
 #' runZnorm runMeanSD
 #'
 #' \code{runZnorm} Compute a running Z-normalization on a numeric vector or on
-#' each column of a matrix-like object. 
+#' each column of a matrix-like object. Note this is not a true Z-normalization but a rolling window.
 #'
 #' 
 #' runMeanSD ruturns a list of the running mean and standard deviation 

@@ -5,8 +5,7 @@
 \alias{lbKeogh}
 \title{LB_Keogh}
 \usage{
-lbKeogh(x, y, win = 20, returnSum = FALSE, cSum = FALSE,
-  dropAttr = TRUE)
+lbKeogh(x, y, win, returnSum = FALSE, cSum = FALSE, dropAttr = TRUE)
 
 envelope(x, win)
 }

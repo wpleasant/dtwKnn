@@ -83,7 +83,7 @@
 #' Recognition 42(9), 2009.
 
 
-lbKeogh <- function(x,y,win=20,returnSum=FALSE,cSum=FALSE,dropAttr=TRUE){
+lbKeogh <- function(x,y,win,returnSum=FALSE,cSum=FALSE,dropAttr=TRUE){
   .Call(lb_keogh_C,x,y,as.integer(win),returnSum,cSum,dropAttr)
 }
 
