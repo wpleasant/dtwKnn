@@ -2,7 +2,9 @@
 #include <Rmath.h>
 #include <Rinternals.h>
 #include <limits.h>
-#include "deque.h"
+//#include "deque.h"
+#include "lb_env.h"
+
 
 
 #define dist(x,y) ((x-y)*(x-y))
@@ -91,15 +93,17 @@ SEXP lb_keogh_C(SEXP x, SEXP y, SEXP win, SEXP returnsum, SEXP csum, SEXP dropAt
      If ncY > 1 then we return the  multivariate version inspired by 
      Toni M. Rath and R. Manmatha " Lower-Bounding of Dynamic Time Warping  
      for Multivariate Time Series ". Otherwise we check y to each column in x
-  */
+     */
 
-  if(ncY==1) lower_upper_lemire(_y, nr, Win, _l, _u);
+  //if(ncY==1) lower_upper_lemire(_y, nr, Win, _l, _u);
+  if(ncY==1) lb_env(_y, _l, _u, nr, Win);
   if(!retSum){
     PROTECT(ans   = allocMatrix(REALSXP,nr,nc));       P++;
     _ans = REAL(ans);
     memset(_ans,0,(size_t)(nr*nc)*sizeof(double));
     for(int j = 0; j<nc; j++){
-      if(ncY > 1) lower_upper_lemire(_y+(nr*j), nr, Win, _l, _u);
+      //if(ncY > 1) lower_upper_lemire(_y+(nr*j), nr, Win, _l, _u);
+      if(ncY > 1) lb_env(_y+(nr*j),_l,_u, nr, Win);
       lsum = lb_keogh_no_sort_cum(_x+(nr*j), _u, _l, _ans+(nr*j), nr, INFINITY, csumcb);
     }
   } else {
@@ -107,7 +111,8 @@ SEXP lb_keogh_C(SEXP x, SEXP y, SEXP win, SEXP returnsum, SEXP csum, SEXP dropAt
     _ans = REAL(ans);
     memset(REAL(ans),0,(size_t)(nc)*sizeof(double));
     for(int j = 0; j<nc; j++){
-      if(ncY > 1) lower_upper_lemire(_y+(nr*j), nr, Win, _l, _u);
+      //if(ncY > 1) lower_upper_lemire(_y+(nr*j), nr, Win, _l, _u);
+      if(ncY > 1) lb_env(_y+(nr*j),_l,_u, nr, Win);
       _ans[j] = lb_keogh_no_sort( _x+(nr*j), _u, _l, nr, INFINITY);
     }
   }

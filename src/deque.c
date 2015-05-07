@@ -156,7 +156,9 @@ SEXP lower_upper_env_C(SEXP x, SEXP win){
   int i, P=0;
   R_len_t nr  = nrows(x);
   R_len_t nc  = ncols(x);
-  R_len_t len = nr*nc; 
+  R_len_t len = nr*nc;
+  if(nr<Win*2+1) error(" win must be < half the length of x ");
+
 
   double * _x;
   if(!isReal(x))  { 

@@ -31,7 +31,10 @@
 #include <math.h>
 #include <Rinternals.h>
 #include <R_ext/Utils.h>
-#include "deque.h"
+//#include "deque.h"
+#include "lb_env.h"
+
+
 
 #define min(x,y) ((x)<(y)?(x):(y))
 #define max(x,y) ((x)>(y)?(x):(y))
@@ -402,7 +405,9 @@ SEXP ucr_dtw_knn_C( SEXP query, SEXP reference, SEXP window, SEXP sizeK
     q[i] = (q[i] - mean)/std;
 
   /// Create envelop of the query: lower envelop, l, and upper envelop, u
-  lower_upper_lemire(q, m, r, l, u);
+  //lower_upper_lemire(q, m, r, l, u);
+  lb_env(q, l, u, m, r);
+
 
   /// Sort the query one time by abs(z-norm(q[i]))
   for( i = 0; i<m; i++)
@@ -440,7 +445,9 @@ SEXP ucr_dtw_knn_C( SEXP query, SEXP reference, SEXP window, SEXP sizeK
 
   
   
-  lower_upper_lemire(ref, lenR, r, l_buff, u_buff);
+  //lower_upper_lemire(ref, lenR, r, l_buff, u_buff);
+  lb_env(ref,l_buff,u_buff, lenR, r);
+
 
   /* Do main task here.. */
   ex=0; ex2=0;

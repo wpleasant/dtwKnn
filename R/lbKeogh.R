@@ -20,15 +20,20 @@
 #' get the true distance simply take sqrt(lbKeogh(x,y,returnSum=TRUE)) or for the
 #' multivariate version sqrt(sum(lbKeogh(x,y,returnSum=TRUE))).
 #'
-#' envelope calculates the upper and lower bounds used in the lbKeogh. The
-#' implementation idea was introduced by Danial Lemire in 2009. It returns a
-#' list containing the upper and lower envelopes for each column in x.
+#' envelope calculates the upper and lower bounds used in the lbKeogh. The old
+#' implementation idea was introduced by Danial Lemire in 2009 (envelope.old). It has
+#' been updated and imporved using Richard Harter's "ascending minima" algorithm;
+#' more than doubling the original speed. The new version also handles cases when the 
+#' window is more than half the length of x. It returns a list containing the upper 
+#' and lower envelopes for each column in x.
 #'
 #' For detailed information see:
 #'
 #' \url{http://www.cs.ucr.edu/~eamonn/LB_Keogh.htm}.
 #'
 #' \url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.14.6347&rep=rep1&type=pdf}.
+#'
+#' \url{ttp://richardhartersworld.com/cri/2001/slidingmin.html}.
 #' 
 #'  @examples 
 #'  set.seed(1001)
@@ -52,6 +57,17 @@
 #'  str(k4)
 #'
 #'  all.equal(colSums(k3),k4,check.attributes=FALSE)
+#'
+#'
+#'  # check new envelope speed vs old.
+#'
+#'  x <- sapply(1:6,function(i) arima.sim(list(ar=c(.95)),n=25000))
+#'
+#'  system.time(e1 <- lapply(1:100, function(i) {envelope.old(x,20)}))
+#'  system.time(e2 <- lapply(1:100, function(i) {envelope(x,20)}))
+#'
+#'  all.equal(e1,e2,check.attributes=FALSE)
+#'
 
 #'
 #'
@@ -71,6 +87,8 @@
 #' expected use for cSum=TRUE is for the early abandoning of later index
 #' searches.
 #' @param dropAttr A bool which if set to false attempts to copy appropriate attributes.  
+#' @param ... Not used. 
+
 #'
 #' @references
 #' Keogh, E. (2002). Exact indexing of dynamic time warping. In 28th
@@ -91,7 +109,16 @@ lbKeogh <- function(x,y,win,returnSum=FALSE,cSum=FALSE,dropAttr=TRUE){
 #' @rdname lbKeogh
 #'
 
-envelope <- function(x,win){
+envelope <- function(x,win,dropAttr=TRUE){
+  if(missing(win)) stop("missing win\n")
+  .Call(lb_env_C, x, win ,dropAttr)
+}
+
+#'
+#' @rdname lbKeogh
+#'
+
+envelope.old <- function(x,win,...){
   if(missing(win)) stop("missing win\n")
   .Call(lower_upper_env_C,x,win)
 }

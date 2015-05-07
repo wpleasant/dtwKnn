@@ -1,16 +1,24 @@
 #useDynLib(dtwKnn, .registration = TRUE, .fixes = "C_")
+
 useDynLib(dtwKnn,
-  lb_keogh_C,
-  run_znorm_C,
-  run_mean_sd_C,
-  ucr_dtw_knn_C,
-  lower_upper_env_C
-  )
+    lb_keogh_C,
+    run_znorm_C,
+    run_mean_sd_C,
+    ucr_dtw_knn_C,
+    lower_upper_env_C,
+    run_min_max_C,
+    lb_env_C
+    )
+
 export(
-  ucrDTW,
-  lbKeogh,
-  envelope,
-  runZnorm,
-  runMeanSD
-)
+    ucrDTW,
+    lbKeogh,
+    envelope,
+    envelope.old,
+    runZnorm,
+    runMeanSD,
+    runMinMax,
+    runmin,
+    runmax
+    )
 
